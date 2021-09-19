@@ -7,8 +7,8 @@ if ($_POST) {
     $comment = htmlspecialchars(strip_tags($_POST['comment']));
     $id_message = (int)$_GET['id_message'];
     var_dump($id_message);
+    include_once "connect.php";
     try {
-        include_once "connect.php";
 
         $rows = $db->exec("INSERT INTO `comments` VALUES
 		(null, '$id_message','$comment')

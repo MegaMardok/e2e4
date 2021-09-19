@@ -10,8 +10,8 @@ echo $homepage;
     </html>
 
 <?php
+include_once "connect.php";
 try {
-    include_once "connect.php";
 
     $query = "SELECT *  FROM `messages` LIMIT 0,10";
     $result = $db->query($query);

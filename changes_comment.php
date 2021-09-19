@@ -4,9 +4,8 @@ $homepage = file_get_contents('head.html');
 echo $homepage;
 if ($_GET) {
     $c_id = (int)$_GET['c_id'];
-
+    include_once "connect.php";
     try {
-        include_once "connect.php";
 
         $query = "SELECT *  FROM `comments` WHERE id = $c_id";
         $result = $db->query($query);
@@ -31,9 +30,8 @@ if ($_POST) {
 
     $comment = htmlspecialchars(strip_tags($_POST['comment']));
     $id_message = (int)$_GET['id_message'];
-
+    include_once "connect.php";
     try {
-        include_once "connect.php";
 
         $rows = $db->exec("UPDATE `comments` SET 
         comment='$comment' WHERE id = $c_id");

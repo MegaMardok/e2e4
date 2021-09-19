@@ -8,9 +8,8 @@ if ($_POST) {
     $title = htmlspecialchars(strip_tags($_POST['title']));
     $short_message = htmlspecialchars(strip_tags($_POST['short_message']));
     $message = htmlspecialchars(strip_tags($_POST['message']));
-
+    include_once "connect.php";
     try {
-        include_once "connect.php";
 
         $rows = $db->exec("INSERT INTO `messages` VALUES
 		(null, '$title','$short_message','$message','$author')

@@ -87,9 +87,8 @@ if ($_GET['del_comment']) {
 
 }
 if ($_GET['del_message']) {
-
+    include_once "connect.php";
     try {
-        include_once "connect.php";
 
         $id_message = (int)$_GET['id_message'];
         $rows = $db->exec("DELETE FROM `messages` WHERE id = $id_message");

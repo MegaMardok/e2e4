@@ -4,10 +4,8 @@ $homepage = file_get_contents('head.html');
 echo $homepage;
 if ($_GET) {
     $id_message = (int)$_GET['id_message'];
-
+    include_once "connect.php";
     try {
-
-        include_once "connect.php";
 
         $query = "SELECT *  FROM `messages` WHERE id = $id_message";
         $result = $db->query($query);
@@ -37,10 +35,8 @@ if ($_POST) {
     $title = htmlspecialchars(strip_tags($_POST['title']));
     $short_message = htmlspecialchars(strip_tags($_POST['short_message']));
     $message = htmlspecialchars(strip_tags($_POST['message']));
-
+    include_once "connect.php";
     try {
-        include_once "connect.php";
-
         $rows = $db->exec("UPDATE `messages` SET 
         title='$title', short_message='$short_message', message= '$message', author= '$author' WHERE id = $id_message");
 
