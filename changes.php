@@ -1,24 +1,16 @@
 <?php
 include_once "db_config.php";
-?>
-
-
-
-<?php
-if ($_GET){
-   $id_message = (int)$_GET['id_message'];
-
-
-
+$homepage = file_get_contents('head.html');
+echo $homepage;
+if ($_GET) {
+    $id_message = (int)$_GET['id_message'];
 
     try {
 
-        $connect_str = DB_DRIVER . ':host=' . DB_HOST . ';dbname=' . DB_NAME;
-        $db = new PDO($connect_str, DB_USER, DB_PASS);
+        include_once "connect.php";
 
         $query = "SELECT *  FROM `messages` WHERE id = $id_message";
         $result = $db->query($query);
-
 
         $error_array = $db->errorInfo();
 
@@ -33,35 +25,26 @@ if ($_GET){
             $short_message = $row['short_message'];
             $message = $row['message'];
 
-
-
-
-
-     }
-    }
-    catch (PDOException $e) {
+        }
+    } catch (PDOException $e) {
         die("Error: " . $e->getMessage());
     }
 }
 
-if ($_POST){
+if ($_POST) {
 
     $author = htmlspecialchars(strip_tags($_POST['author']));
     $title = htmlspecialchars(strip_tags($_POST['title']));
     $short_message = htmlspecialchars(strip_tags($_POST['short_message']));
     $message = htmlspecialchars(strip_tags($_POST['message']));
 
-
     try {
-
-        $connect_str = DB_DRIVER . ':host=' . DB_HOST . ';dbname=' . DB_NAME;
-        $db = new PDO($connect_str, DB_USER, DB_PASS);
+        include_once "connect.php";
 
         $rows = $db->exec("UPDATE `messages` SET 
         title='$title', short_message='$short_message', message= '$message', author= '$author' WHERE id = $id_message");
 
         echo "<meta http-equiv='Refresh' content='0; URL=index.php'>";
-
 
         $error_array = $db->errorInfo();
 
@@ -69,33 +52,24 @@ if ($_POST){
 
             echo "SQL ошибка: " . $error_array[2] . '<br />';
 
-    }
-    catch (PDOException $e) {
+    } catch (PDOException $e) {
         die("Error: " . $e->getMessage());
     }
 }
 ?>
-<!doctype html>
-<html lang="ru">
-<head>
-    <title>Просмотр списка</title>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-</head>
+
 <body>
 <a href="index.php">На главную</a>
 <form action="" method="post">
     <p> Ваше имя</p>
-    <textarea type="text" required name="author"><?=$author ?></textarea>
+    <textarea type="text" required name="author"><?= $author ?></textarea>
     <p> Заголовок</p>
-    <textarea type="text" required name="title"><?=$title ?></textarea>
+    <textarea type="text" required name="title"><?= $title ?></textarea>
     <p> Краткое описание</p>
-    <textarea type="text" required name="short_message"><?=$short_message ?></textarea>
+    <textarea type="text" required name="short_message"><?= $short_message ?></textarea>
     <p> Сообщение</p>
-    <textarea type="text" required name="message"  cols="30" rows=5"><?=$message ?></textarea>
-    <input type="submit" >
+    <textarea type="text" required name="message" cols="30" rows=5"><?= $message ?></textarea>
+    <input type="submit">
 
 </form>
 

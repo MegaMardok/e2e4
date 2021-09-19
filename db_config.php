@@ -6,4 +6,3 @@ define('DB_NAME', 'e2e4');
 define('DB_USER', 'root');
 define('DB_PASS', 'root');
 
-?>
